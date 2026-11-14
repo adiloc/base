@@ -1,10 +1,10 @@
-# 🏠 Homelab
+# 🏠 base
 
 **A production-grade home infrastructure — because the best way to predict the future is to run it at home.**
 
-[![Security Scan](https://github.com/adiloc/homelab/actions/workflows/security.yml/badge.svg)](https://github.com/adiloc/homelab/actions/workflows/security.yml)
+[![Security Scan](https://github.com/adiloc/base/actions/workflows/security.yml/badge.svg)](https://github.com/adiloc/base/actions/workflows/security.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![YAML Lint](https://github.com/adiloc/homelab/actions/workflows/validate.yml/badge.svg)](https://github.com/adiloc/homelab/actions/workflows/validate.yml)
+[![YAML Lint](https://github.com/adiloc/base/actions/workflows/validate.yml/badge.svg)](https://github.com/adiloc/base/actions/workflows/validate.yml)
 
 ---
 
@@ -16,7 +16,7 @@ I don't just run containers. I design architectures, write security policies, cr
 
 ---
 
-## Architecture at a glance
+## Architecture
 
 ```
                     ┌─────────────────────────────────────────┐
@@ -63,17 +63,17 @@ I don't just run containers. I design architectures, write security policies, cr
 
 | Service | Port | Why It Matters |
 |---------|------|----------------|
-| **Caddy** | 80, 443 | Zero-config HTTPS with automatic certificate management. Your services don't just work — they're *encrypted*. |
-| **Dnsmasq** | 53 | Local DNS + DHCP. Every device on your network has a predictable address and a resolvable name. |
-| **WireGuard** | 51820 | Miminal, fast VPN. Access your lab from anywhere, with zero trust compromises. |
+| **Caddy** | 80, 443 | Zero-config HTTPS with automatic certificates. Every service is encrypted. |
+| **Dnsmasq** | 53 | Local DNS + DHCP. Every device gets a predictable address and resolvable name. |
+| **WireGuard** | 51820 | Minimal, fast VPN. Access from anywhere, zero trust compromises. |
 
 ### 🏠 Home Automation
 
 | Service | Purpose | The Cool Part |
 |---------|---------|---------------|
-| **Home Assistant** | The brain. Orchestrates everything. | Deep integration with 1,000+ devices, custom blueprints, and automations that actually work. |
-| **ESPHome** | IoT device firmware | Custom components (including my own `aip33628` display driver) — I don't just use off-the-shelf firmware. |
-| **Mosquitto** | MQTT broker | The message backbone. Every sensor, every switch, every notification flows through here. |
+| **Home Assistant** | The brain. Orchestrates everything. | 1,000+ device integrations, custom blueprints, automations that work. |
+| **ESPHome** | IoT firmware | Custom components — including my own `aip33628` display driver. |
+| **Mosquitto** | MQTT broker | The message backbone. Every sensor and switch flows through here. |
 | **Zigbee2MQTT** | Zigbee ↔ MQTT bridge | One coordinator, dozens of devices, zero vendor lock-in. |
 
 ### 💾 Infrastructure
@@ -88,16 +88,16 @@ I don't just run containers. I design architectures, write security policies, cr
 
 | Service | Purpose |
 |---------|---------|
-| **Homepage** | Beautiful, customizable dashboard for all services |
-| **Wallabag** | Read-it-later. Your own Pocket, self-hosted. |
-| **Planka** | Kanban boards. Project management without selling your data. |
-| **Linkding** | Minimal, fast bookmark manager. |
+| **Homepage** | Dashboard for all services |
+| **Wallabag** | Self-hosted read-it-later |
+| **Planka** | Kanban boards |
+| **Linkding** | Minimal bookmark manager |
 
 ### 🔍 Monitoring
 
 | Service | Purpose |
 |---------|---------|
-| **Uptime Kuma** | Health checks, alerts, status pages. If something breaks, I know before you do. |
+| **Uptime Kuma** | Health checks, alerts, status pages |
 
 ---
 
@@ -105,14 +105,14 @@ I don't just run containers. I design architectures, write security policies, cr
 
 A homelab isn't impressive because of what you run. It's impressive by how you run it.
 
-### 🔐 Security-First by Default
+### 🔐 Security-First
 
-- **Gitleaks** — Automated secret scanning on every commit and weekly scheduled runs
+- **Gitleaks** — Secret scanning on every commit and weekly scheduled runs
 - **Trivy** — Configuration vulnerability scanning in CI/CD
 - **Threat model** documented in `docs/security/threat-model.md`
-- **Secrets** never touch the repo. Ever. Mounted via bind volume at runtime only
+- **Secrets** never touch the repo. Mounted via bind volume at runtime only
 - **Network isolation** — Services only talk to what they need
-- **No anonymous access** — MQTT requires auth, every service is behind Caddy
+- **No anonymous access** — MQTT requires auth, all traffic behind Caddy
 
 ### 🧪 Development Workflow
 
@@ -185,15 +185,15 @@ Everything is declarative. `git clone`, fill in your secrets, `docker compose up
 
 This repo is the config layer. You'll need:
 
-1. **A machine** — anything from a Raspberry Pi 4 to a small form-factor PC
+1. **A machine** — Raspberry Pi 4 or any x86_64 server
 2. **Docker + Docker Compose**
-3. **Your secrets** — create a `secrets/` directory following the patterns shown in `.env.example`
-4. **One Zigbee coordinator** (if you want the full smart home experience)
+3. **Your secrets** — create a `secrets/` directory following `.env.example`
+4. **One Zigbee coordinator** (optional, for full smart home)
 
 ```bash
 # Clone, configure, go
-git clone https://github.com/adiloc/homelab.git
-cd homelab
+git clone https://github.com/adiloc/base.git
+cd base
 cp .env.example .env    # fill in your values
 make dev-up
 ```
@@ -213,7 +213,7 @@ I take this seriously — because a home is personal.
 | YAML quality | yamllint enforces consistency |
 | Shell safety | shellcheck on all scripts |
 | Threat model | Documented in `docs/security/threat-model.md` |
-| Network isolation | Services are segmented, no broadcast exposure |
+| Network isolation | Services segmented, no broadcast exposure |
 
 See `docs/security/` for full documentation.
 
@@ -221,18 +221,16 @@ See `docs/security/` for full documentation.
 
 ## Contributing
 
-This repo is primarily a personal project, but the code, configs, and documentation are MIT-licensed and open to all.
+This repo is primarily a personal project, but everything is MIT-licensed and open to all.
 
 If you find something useful — a custom ESPHome component, a useful automation, a better config — fork it and make it yours. That's what this is for.
 
 ---
 
-## Built with 🔥
+## License
 
-Every service in this lab was chosen, configured, and integrated because it solves a real problem. Nothing here is "because it's cool" — even if it is cool.
-
-This is infrastructure engineering done right: **secure, automated, documented, and actually useful.**
+MIT — see [LICENSE](LICENSE)
 
 ---
 
-*Made with obsessive attention to detail. Because the things that run your life deserve more than good enough.*
+*Infrastructure engineering done right: **secure, automated, documented, and actually useful.** Because the things that run your life deserve more than good enough.*
