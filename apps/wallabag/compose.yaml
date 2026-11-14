@@ -1,0 +1,23 @@
+services:
+  wallabag:
+    image: wallabag/wallabag:latest
+    container_name: wallabag
+    env_file:
+      - ../../../secrets/wallabag/.env
+    ports:
+      - "8085:80"
+    volumes:
+      - ../../../data/wallabag/data:/var/www/wallabag/data
+      - ../../../data/wallabag/images:/var/www/wallabag/web/assets/images
+    restart: unless-stopped
+    networks:
+      - homelab
+      - database_internal
+
+networks:
+  homelab:
+    external: true
+    name: homelab
+  database_internal:
+    external: true
+    name: database_internal

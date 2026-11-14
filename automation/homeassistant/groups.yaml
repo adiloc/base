@@ -1,0 +1,18 @@
+lights:
+  name: Lights
+  entities:
+    - switch.light_ceiling
+  # - switch.plug_4x_aux
+    - switch.plug_4x_lamp
+    - switch.rf_ch1
+    - switch.rf_ch2
+    - switch.rf_ch3
+    - light.0x588e81fffef95f97
+
+plugs:
+  name: Plugs
+  entities:
+    - switch.plug_sound
+
+
+

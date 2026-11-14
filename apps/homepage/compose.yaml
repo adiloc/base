@@ -1,0 +1,18 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    env_file:
+      - ../../../secrets/homepage/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../../data/homepage/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - homelab
+    restart: unless-stopped
+
+networks:
+  homelab:
+    external: true

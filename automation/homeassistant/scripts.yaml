@@ -1,0 +1,36 @@
+# light_flash_notification:
+#   alias: Light Flash Notification
+#   sequence:
+#   - service: homeassistant.turn_on
+#     data:
+#       entity_id: group.notification_lights
+#   - delay:
+#       seconds: 1
+#   - service: homeassistant.turn_off
+#     data:
+#       entity_id: group.notification_lights
+#   - service: script.turn_on
+#     data:
+#       entity_id: script.light_flash_notification_loop
+
+# light_flash_notification_loop:
+#   alias: Light Flash Notification Loop
+#   sequence:
+#   - delay:
+#       seconds: 1
+#   - service: script.turn_on
+#     data:
+#       entity_id: script.light_flash_notification
+
+# timer_notification:
+#   alias: Timer Notifications
+#   sequence:
+#   - delay:
+#       seconds: 30
+#   - service: script.turn_off
+#     data:
+#       entity_id: script.light_flash_notification, script.light_flash_notification_loop
+#   - service: homeassistant.turn_off
+#     data:
+#       entity_id: group.notification_lights
+    

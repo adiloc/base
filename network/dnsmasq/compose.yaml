@@ -1,0 +1,9 @@
+
+services:
+  dnsmasq:
+    image: dockurr/dnsmasq
+    container_name: dnsmasq
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ../../../data/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf:ro

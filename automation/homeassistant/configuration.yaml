@@ -1,0 +1,65 @@
+#homeassistant:
+#  customize: !include customize.yaml
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+group: !include groups.yaml
+automation manual: !include_dir_merge_list automations/
+
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      
+  - platform: integration
+    source: sensor.total_power_consumtion_rms
+    name: Energy Spent
+    unit_prefix: k
+    round: 2
+
+  - platform: history_stats
+    name: "Powerplant"  # Rename this
+    entity_id: switch.heater_tasmota # Replace with your device
+    state: "on"  # Must be lowercase
+    type: time
+    start: "{{ today_at('00:00') }}"
+    end: "{{ now() }}"         # Current moment
+    
+climate:
+  - platform: generic_thermostat
+    name: T1
+    heater: switch.heater_tasmota
+  # target_sensor: sensor.t_1_bme280_temperature
+    target_sensor: sensor.0xcc36bbfffe7e059b_temperature
+    min_temp: 15
+    max_temp: 24
+    ac_mode: false
+    target_temp: 17
+    cold_tolerance: 0.5
+    hot_tolerance: 0.5
+    min_cycle_duration:
+      seconds: 5
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "off"
+    away_temp: 18
+    precision: 0.1
+    
+command_line:
+  - sensor:
+      name: CPU Temperature
+      command: "cat /sys/class/thermal/thermal_zone0/temp"
+      # If errors occur, make sure configuration file is encoded as UTF-8
+      unit_of_measurement: "°C"
+      value_template: "{{ value | multiply(0.001) | round(1) }}"
+

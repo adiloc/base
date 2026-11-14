@@ -1,0 +1,32 @@
+services:
+  caddy:
+    image: caddy:2
+    container_name: caddy
+    env_file:
+      - ../../../secrets/caddy/.env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ../../../data/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      homelab:
+        ipv4_address: ${CADDY_NIC_IP}
+    restart: unless-stopped
+
+networks:
+  homelab:
+    external: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${CADDY_SUBNET}
+
+volumes:
+  caddy_data:
+  caddy_config:

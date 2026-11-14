@@ -1,0 +1,17 @@
+services:
+  linkding:
+    image: sissbruecker/linkding:latest
+    container_name: linkding
+    env_file:
+      - ../../../secrets/linkding/.env
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../../../data/linkding/data:/etc/linkding/data
+    networks:
+      - homelab
+    restart: unless-stopped
+
+networks:
+  homelab:
+    external: true

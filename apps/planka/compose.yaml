@@ -1,0 +1,21 @@
+services:
+  planka:
+    image: ghcr.io/plankanban/planka:latest
+    container_name: planka
+    restart: unless-stopped
+    env_file:
+      - ../../../secrets/planka/.env
+    volumes:
+      - ../../../data/wallabag/data:/var/www/wallabag/data
+      - ../../../data/wallabag/images:/var/www/wallabag/web/assets/images
+    networks:
+      - homelab
+      - database_internal
+
+networks:
+  homelab:
+    external: true
+    name: homelab
+  database_internal:
+    external: true
+    name: database_internal

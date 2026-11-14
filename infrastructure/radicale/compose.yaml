@@ -1,0 +1,17 @@
+services:
+  radicale:
+    image: tomsquest/docker-radicale:latest
+    container_name: radicale
+    restart: unless-stopped
+    env_file:
+      - ../../../secrets/radicale/.env
+    volumes:
+      - ../../../data/radicale/config:/config
+      - ../../../data/radicale:/data
+      - ../../../secrets/radicale/users:/data/users
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true

@@ -1,0 +1,55 @@
+[allowlist]
+description = "Global Allowlist"
+paths = [
+  '''\\.gitignore$''',
+  '''\\.dockerignore$''',
+  '''\\.gitleaks\\.toml$''',
+  '''README \\.md$''',
+  '''LICENSE$''',
+  '''.env \\.example$''',
+  '''\\.example \\.yaml$''',
+  '''\\.example \\.conf$''',
+  '''\\.example$''',
+]
+
+[[rules]]
+id = "wifi-password"
+description = "WiFi Password"
+regex = '''wifi_password\s*[:=]\s*['"]?[A-Za-z0-9+/@#$%^&*!]+['"]?'''
+tags = ["wifi", "security"]
+
+[[rules]]
+id = "mqtt-password"
+description = "MQTT Password"
+regex = '''(?i)(?:mqtt|mosquitto)[A-Za-z0-9_.-]*(?:password|pass)\s*[:=]\s*['"]?[^\s'"]+'''
+tags = ["mqtt", "security"]
+
+[[rules]]
+id = "zigbee-auth-token"
+description = "Zigbee2MQTT Auth Token"
+regex = '''auth_token\s*[:=]\s*['"]?[a-f0-9]+['"]?'''
+tags = ["zigbee", "security"]
+
+[[rules]]
+id = "duckdns-token"
+description = "DuckDNS Token"
+regex = '''duckdns_token\s*[:=]\s*['"]?[a-f0-9-]+['"]?'''
+tags = ["duckdns", "security"]
+
+[[rules]]
+id = "minio-password"
+description = "MinIO Password"
+regex = '''MINIO_ROOT_PASSWORD\s*[:=]\s*['"]?[A-Za-z0-9+/@#$%^&*!]+['"]?'''
+tags = ["minio", "security"]
+
+[[rules]]
+id = "postgres-password"
+description = "PostgreSQL Password"
+regex = '''POSTGRES_PASSWORD\s*[:=]\s*['"]?[A-Za-z0-9+/@#$%^&*!]+['"]?'''
+tags = ["postgres", "security"]
+
+[[rules]]
+id = "private-key"
+description = "Private Key"
+regex = '''-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----'''
+tags = ["key", "security"]

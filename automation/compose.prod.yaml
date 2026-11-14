@@ -1,0 +1,69 @@
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    network_mode: host
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    environment:
+      - TZ=Europe/Bucharest
+    restart: unless-stopped
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt
+    network_mode: host
+    volumes:
+      - ./zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro        # auto-detect port & some adapters eg ConBee
+      - /dev/serial/by-id:/dev/serial/by-id
+    depends_on:
+      - mosquitto
+    environment:
+      - TZ=Europe/Bucharest
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    restart: unless-stopped
+
+  homeassistant: # 8123
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - ./homeassistant:/config
+      - /run/dbus:/run/dbus:ro  # dbus socket for bluetooth
+    depends_on:
+      - mosquitto
+      - zigbee2mqtt
+    environment:
+      - TZ=Europe/Bucharest
+    network_mode: host # only for RPi
+    privileged: true
+    restart: unless-stopped
+
+  esphome:
+    container_name: esphome
+    image: esphome/esphome:latest
+    network_mode: host
+    volumes:
+      - ./esphome:/config
+    environment:
+      - TZ=Europe/Bucharest
+    restart: unless-stopped
+
+  tasmoadmin:
+    image: ghcr.io/tasmoadmin/tasmoadmin:latest
+    container_name: tasmoadmin
+    ports:
+      - 8081:80
+    volumes:
+      - ./tasmoadmin/data:/data
+    networks:
+      - homelab
+    restart: unless-stopped
+
+networks:
+  homelab:
+    external: true
+    name: homelab

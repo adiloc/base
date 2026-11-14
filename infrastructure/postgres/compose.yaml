@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: unless-stopped
+    env_file:
+      - ../../../secrets/postgres/.env
+    volumes:
+      - ../../../data/postgres/db-data:/var/lib/postgresql/data
+    networks:
+      database_internal:
+        aliases:
+          - postgres
+
+networks:
+  database_internal:
+    external: true
+    name: database_internal
