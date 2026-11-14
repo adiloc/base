@@ -49,7 +49,31 @@ regex = '''POSTGRES_PASSWORD\s*[:=]\s*['"]?[A-Za-z0-9+/@#$%^&*!]+['"]?'''
 tags = ["postgres", "security"]
 
 [[rules]]
+id = "generic-api-key"
+description = "Generic API Key"
+regex = '''(?:api[_-]?key|apikey)\s*[:=]\s*['"]?[A-Za-z0-9_\-]{20,}['"]?'''
+tags = ["api", "key"]
+
+[[rules]]
+id = "github-token"
+description = "GitHub Personal Access Token"
+regex = '''(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{36,}'''
+tags = ["github", "token"]
+
+[[rules]]
+id = "aws-access-key"
+description = "AWS Access Key"
+regex = '''AKIA[0-9A-Z]{16}'''
+tags = ["aws", "key"]
+
+[[rules]]
+id = "ssh-key"
+description = "SSH Authorized Key"
+regex = '''ssh-(rsa|ed25519|dss) [A-Za-z0-9+/]+'''
+tags = ["ssh", "key"]
+
+[[rules]]
 id = "private-key"
 description = "Private Key"
-regex = '''-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----'''
+regex = '''-----BEGIN (RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----'''
 tags = ["key", "security"]

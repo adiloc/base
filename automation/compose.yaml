@@ -9,7 +9,7 @@ services:
       - ../../data/mosquitto/data:/mosquitto/data
       - ../../data/mosquitto/log:/mosquitto/log
     environment:
-      - TZ=Europe/Bucharest
+      - TZ=UTC
     restart: unless-stopped
 
   zigbee2mqtt:
@@ -23,7 +23,7 @@ services:
     depends_on:
       - mosquitto
     environment:
-      - TZ=Europe/Bucharest
+      - TZ=UTC
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
     restart: unless-stopped
@@ -45,7 +45,7 @@ services:
        - mosquitto
        - zigbee2mqtt
     environment:
-      - TZ=Europe/Bucharest
+      - TZ=UTC
     network_mode: host # only for RPi
     privileged: true
     restart: unless-stopped
@@ -58,7 +58,7 @@ services:
       - ../../data/esphome:/config
       - ../../secrets/esphome/secrets.yaml:/config/secrets.yaml:ro
     environment:
-      - TZ=Europe/Bucharest
+      - TZ=UTC
     restart: unless-stopped
 
   tasmoadmin:
