@@ -1,0 +1,3 @@
+# Hide C++ files from GitHub language stats (they're ESPHome firmware, not the main codebase)
+automation/esphome/components/components/aip33628/*.cpp linguist-vendored
+automation/esphome/components/components/aip33628/*.h linguist-vendored
