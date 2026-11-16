@@ -19,39 +19,39 @@ I don't just run containers. I design architectures, write security policies, cr
 ## Architecture
 
 ```
-                    ┌─────────────────────────────────────────┐
-                    │              Your Home                  │
-                    │                                         │
-  ┌─────────┐      │  ┌──────────┐   ┌───────────┐           │
+                   ┌─────────────────────────────────────────┐
+                   │              Your Home                  │
+                   │                                         │
+  ┌──────────┐     │  ┌──────────┐   ┌───────────┐           │
   │ WireGuard│─────┼─▶│  Caddy   │◀──│  Dnsmasq  │           │
-  │   VPN   │      │  │  Reverse │   │   DNS +   │           │
-  └─────────┘      │  │  Proxy   │   │   DHCP    │           │
+  │   VPN    │     │  │  Reverse │   │   DNS +   │           │
+  └──────────┘     │  │  Proxy   │   │   DHCP    │           │
                    │  │  HTTPS   │   └───────────┘           │
-                   │  └──────────┘            │               │
-                   │           │  ┌─────────────────────┐    │
-                   │           ├──│    Apps & Services   │    │
-                   │           │  │                     │    │
-                   │  ┌────────┼──│  Homepage (Dashboard)│    │
-                   │  │        │  │  Wallabag (Read-Later)│    │
-                   │  │  Home  │  │  Planka (Kanban)     │    │
-                   │  │  Assistant│  Linkding (Bookmarks)│    │
-                   │  │  Hub   │  └─────────────────────┘    │
-                   │  └────────┘                              │
-                   │  ┌─────────────────────┐    ┌──────────┐ │
-                   │  │  Automation Layer   │    │Monitoring│ │
-                   │  │                     │    │          │ │
-                   │  │  Mosquitto (MQTT)   │◀───│ Uptime   │ │
-                   │  │  Zigbee2MQTT        │    │  Kuma    │ │
-                   │  │  ESPHome (IoT)      │    └──────────┘ │
-                   │  │  Home Assistant     │                  │
-                   │  └─────────────────────┘                  │
-                   │  ┌─────────────────────┐                  │
-                   │  │  Storage & Data     │                  │
-                   │  │                     │                  │
-                   │  │  MinIO (S3)         │                  │
-                   │  │  PostgreSQL         │                  │
-                   │  │  Radicale (CalDAV)  │                  │
-                   │  └─────────────────────┘                  │
+                   │  └──────────┘            │              │
+                   │           │  ┌───────────────────────┐  │
+                   │           ├──│    Apps & Services    │  │
+                   │           │  │                       │  │
+                   │  ┌────────┼──│  Homepage (Dashboard) │  │
+                   │  │        │  │  Wallabag (Read-Later)│  │
+                   │  │  Home  │  │  Planka (Kanban)      │  │
+                   │  │  Assistant│  Linkding (Bookmarks) │  │
+                   │  │  Hub   │  └───────────────────────┘  │
+                   │  └────────┘                             │
+                   │  ┌─────────────────────┐    ┌──────────┐│
+                   │  │  Automation Layer   │    │Monitoring││
+                   │  │                     │    │          ││
+                   │  │  Mosquitto (MQTT)   │◀───│ Uptime   ││
+                   │  │  Zigbee2MQTT        │    │  Kuma    ││
+                   │  │  ESPHome (IoT)      │    └──────────┘│
+                   │  │  Home Assistant     │                │
+                   │  └─────────────────────┘                │
+                   │  ┌─────────────────────┐                │
+                   │  │  Storage & Data     │                │
+                   │  │                     │                │
+                   │  │  MinIO (S3)         │                │
+                   │  │  PostgreSQL         │                │
+                   │  │  Radicale (CalDAV)  │                │
+                   │  └─────────────────────┘                │
                    └─────────────────────────────────────────┘
 ```
 
